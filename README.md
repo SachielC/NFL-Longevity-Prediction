@@ -15,12 +15,12 @@ league as a starter (the best player on your team at a specific position). We co
 that game-statistics and season awards were too dependent on the era in which the game 
 was played, and that years played as a starter was most indicative of true success.
 
+1 https://www.profootballnetwork.com/what-is-the-nfl-combine/
 ## Methodology
 We combined our two aforementioned datasets into one large data frame 
 (containing both the Combine measurements and NFL statistics, combined via a 
 common player name). We then eliminated any unneeded rows deemed irrelevant for our 
 purposes. For example, passing, rushing and receiving statistics were removed, as our 
-1 https://www.profootballnetwork.com/what-is-the-nfl-combine/
 model only takes years started into account for determining success. Our final data frame 
 includes NFL players, their aforementioned Combine measurements and their years 
 started in the NFL as well as information about the team they were drafted to, the year 
@@ -67,11 +67,12 @@ We excluded offensive lineman from our results, as our model consistently
 predicted 10+ years starting, regardless of Combine data. This is likely due to the fact Pro 
 Bowl linemen almost always start a long time as opposed to other positions due to a 
 general longevity of playing that position.
-2 https://www.pff.com/grades
 Our data displays reasonable correlation (~59%) with one major outlier being 
 Derek Stingley. This, however, makes sense as Stingley suffered several injuries before 
 and during the 2022 season, greatly limiting his ability to perform, thus impacting his PFF 
 grade.
+
+2 https://www.pff.com/grades
 
 Using our model, we ran combine data on select players from the 2023 Draft as an 
 exercise. The model predicts that Devon Witherspoon and Tyree Wilson will start the 
