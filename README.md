@@ -1,5 +1,5 @@
-## NFL-Longevity-Prediction
-# Introduction
+# NFL-Longevity-Prediction
+## Introduction
 The National Football League (NFL) Combine is an annual event in which those 
 hopeful of one day playing in the NFL get an opportunity to show off their skills to teams 
 ahead of the NFL Draft in hopes of getting selected. As part of the NFL Combine, the size 
@@ -15,7 +15,7 @@ league as a starter (the best player on your team at a specific position). We co
 that game-statistics and season awards were too dependent on the era in which the game 
 was played, and that years played as a starter was most indicative of true success.
 
-# Methodology
+## Methodology
 We combined our two aforementioned datasets into one large data frame 
 (containing both the Combine measurements and NFL statistics, combined via a 
 common player name). We then eliminated any unneeded rows deemed irrelevant for our 
@@ -58,7 +58,7 @@ Looking at the 2022 Draft class serves as interesting context for their rookie y
 performances. We tested certain players from the 2023 Draft simply as neat exercise 
 given our working on this project coincided with this year’s draft.
 
-# Results
+## Results
 Running the data on select top players from the 2022 Draft class gave us these 
 results: the X-axis is our forest’s estimated years starting and the Y-axis is the player’s 
 2022 Pro Football Focus (PFF) grade. PFF assigns player grades on a 0-100 scale. These 
@@ -82,7 +82,7 @@ raw talent and other athletic abilities. Interestingly, Will Levis, who was wide
 to go in the first round, slid down to the second round. This goes against the suggestion 
 of our model, which projects him as a 10-year starter in the NFL. 
 
-# Conclusion
+## Conclusion
 Predicting success of NFL prospects is difficult, and our model offers an 
 interesting and semi-effective way of assisting in this process. By taking in raw athletic 
 Combine data and making a prediction about how many years a player will start, we found 
