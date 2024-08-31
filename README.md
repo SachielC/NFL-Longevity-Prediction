@@ -3,7 +3,7 @@
 The National Football League (NFL) Combine is an annual event in which those 
 hopeful of one day playing in the NFL get an opportunity to show off their skills to teams 
 ahead of the NFL Draft in hopes of getting selected. As part of the NFL Combine, the size 
-of players are measured as well as other physical attributes.1 The Combine 
+of players are measured as well as other physical attributes (see 1 below for more). The Combine 
 measurements our model takes into account are a player’s height (inches), weight 
 (pounds), age (years), arm length (inches), their 40-yard dash time (seconds), vertical 
 jump height (inches), bench press (pounds) and 20-yard shuttle time (seconds).
@@ -62,7 +62,7 @@ given our working on this project coincided with this year’s draft.
 Running the data on select top players from the 2022 Draft class gave us these 
 results: the X-axis is our forest’s estimated years starting and the Y-axis is the player’s 
 2022 Pro Football Focus (PFF) grade. PFF assigns player grades on a 0-100 scale. These 
-grades are assigned by professional football writers and analysts based on player ingame performances.2
+grades are assigned by professional football writers and analysts based on player ingame performances (see 2 below for more.)
 We excluded offensive lineman from our results, as our model consistently 
 predicted 10+ years starting, regardless of Combine data. This is likely due to the fact Pro 
 Bowl linemen almost always start a long time as opposed to other positions due to a 
