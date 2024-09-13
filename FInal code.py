@@ -10,49 +10,68 @@ df2 = pd.read_csv('nfl_draft_1970-2021.csv', sep = ',')
 
 #Merging Tables, getting rid of some unnecessary columns to make data more legible
 df_merged = df.merge(df2,left_on = 'nameFull', right_on = 'player')
-df_new = df_merged.drop(columns=['nameFirst', 'nameLast', 'playerId', 'nflId', 'combineId', 'collegeId', 'rush_att', 'rush_yards', 'rush_tds', 'receptions', 'rec_yards','rec_tds', 'games', 'pass_tds', 'carAV', 'drAV', 'college_x', 'position_x'])
-df_new = df_new.drop(columns=['pass_comp', 'pass_att', 'pass_yards', 'pass_int', 'interceptions', 'dob', 'playerProfileUrl', 'age', 'sacks', 'tackles'])
-df_new = df_new.drop(columns=['college_y','to','player','pick','round','combineWonderlic'])
+
+df_new = df_merged.drop(columns=['nameFirst', 'nameLast', 'playerId', 'nflId', 'combineId', 
+                                'collegeId', 'rush_att', 'rush_yards', 'rush_tds', 
+                                'receptions', 'rec_yards','rec_tds', 'games', 'pass_tds', 
+                                'carAV', 'drAV', 'college_x', 'position_x','pass_comp', 'pass_att', 
+                                'pass_yards', 'pass_int', 'interceptions',
+                                'dob', 'playerProfileUrl', 'age', 'sacks', 'tackles','college_y',
+                                'to','player','pick','round','combineWonderlic'])
 df_new = df_new.fillna(0)
 df_new.to_csv('data.csv')
 
 
 def guess_in_dataset(player, position):
-#Troubleshooting / initial testing function
-  data = pd.read_csv('data.csv')
-  play = data[(data['nameFull'] == player) & (data['combinePosition'] == position)]
-  player_data = play.loc[:,['heightInches', 'combineWeight', 'ageAtDraft', 'combineArm', 'combine40yd', 'combineVert', 'combineBench', 'combineShuttle', 'combine60ydShuttle']]
-  datas = data[(data['starter'] > 0)]  
-  features1 = ['heightInches', 'combineWeight', 'ageAtDraft', 'combineArm', 'combine40yd', 'combineVert', 'combineBench', 'combineShuttle', 'combine60ydShuttle']
-  label = 'starter' 
-  X = datas[features1]
-  y = datas[label]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
-  Forest = RandomForestClassifier(n_estimators=300)
-  Forest.fit(X_train, y_train)
-  print(Forest.score(X_test,y_test))
-  print(play.loc[:,'starter'])
-  return(Forest.predict(player_data))
+    """Troubleshooting / initial testing function
+    Args:
+        player (string): Full Name of Player
+        position  (string): containing WR, FB, RB, QB, TE, OT, C, OG, DE, DT, LB, ILB, OLB, CB, SS, FS. 
+                            useful to find out what forest to establish to judge a player
+    """
+
+    data = pd.read_csv('data.csv')
+    play = data[(data['nameFull'] == player) & (data['combinePosition'] == position)]
+    player_data = play.loc[:,['heightInches', 'combineWeight', 'ageAtDraft', 
+                            'combineArm', 'combine40yd', 'combineVert', 'combineBench', 
+                            'combineShuttle', 'combine60ydShuttle']]
+    datas = data[(data['starter'] > 0)]  
+    features1 = ['heightInches', 'combineWeight', 'ageAtDraft', 'combineArm', 
+                'combine40yd', 'combineVert', 'combineBench', 'combineShuttle', 'combine60ydShuttle']
+    label = 'starter' 
+    X = datas[features1]
+    y = datas[label]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+    Forest = RandomForestClassifier(n_estimators=300)
+    Forest.fit(X_train, y_train)
+    print(Forest.score(X_test,y_test))
+    print(play.loc[:,'starter'])
+    return(Forest.predict(player_data))
 
 
 def guess_new(lst, position):
-#Trains a dataset based off a player's position and inputs their measurables to guess years started  
-  data = pd.read_csv('data.csv')
-  player_data = pd.DataFrame(lst).T
-  player_data.columns = ['heightInches', 'combineWeight', 'ageAtDraft', 
-                         'combineArm', 'combine40yd', 'combineVert', 'combineBench', 'combineShuttle']
-  print(player_data.head)
-  probowlersonly = data[(data['pro_bowl'] >= 1) & (data['combinePosition'] == position)]
-  datas = probowlersonly
-  features1 = ['heightInches', 'combineWeight', 'ageAtDraft', 'combineArm', 
-               'combine40yd', 'combineVert', 'combineBench', 'combineShuttle']
-  label = 'starter' 
-  X = datas[features1]
-  y = datas[label]
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.1)
-  Forest2 = RandomForestClassifier(n_estimators=500)
-  Forest2.fit(X_train, y_train)
-  return(Forest2.predict(player_data))
+    """Trains a dataset based off a player's position and inputs their measurables to guess years started  
+    Args:
+        lst (List): List of player's name and stats
+        position (Str): Position of player
+    """
+    
+    data = pd.read_csv('data.csv')
+    player_data = pd.DataFrame(lst).T
+    player_data.columns = ['heightInches', 'combineWeight', 'ageAtDraft', 
+                        'combineArm', 'combine40yd', 'combineVert', 'combineBench', 'combineShuttle']
+    print(player_data.head)
+    probowlersonly = data[(data['pro_bowl'] >= 1) & (data['combinePosition'] == position)]
+    datas = probowlersonly
+    features1 = ['heightInches', 'combineWeight', 'ageAtDraft', 'combineArm', 
+                'combine40yd', 'combineVert', 'combineBench', 'combineShuttle']
+    label = 'starter' 
+    X = datas[features1]
+    y = datas[label]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.1)
+    Forest2 = RandomForestClassifier(n_estimators=500)
+    Forest2.fit(X_train, y_train)
+    return(Forest2.predict(player_data))
 #Data is :HT, WT, AGE, ARM, 40, VERTICAL, BENCH, SHUTTLE
 #Two Datasets which have playerdata from 2022 and 2023
 draft2023 = {
@@ -93,14 +112,14 @@ for player in draft2022:
     print(guess_new(draft2022[player][0], draft2022[player][1]))
 
 """RESULTS / VISUALIZATION SECTION,
-Taken from several tests from the forest"""
+Taken from am average of several runs from the forest"""
 
 #Graphs players based on X: the guess made by the algorithm and Y: PFF grades
 
 pff_grades = np.array([60.3, 80.7, 49.1, 87.9, 71.9, 83.2, 82.7, 82.5, 71.4, 75.5, 51.9, 52])
 prediction = np.array([5, 12, 12, 7, 11, 8, 10, 6, 6, 7, 4, 5])
 names = ['Travon Walker', 'Aidan Hutchinson', 'Derek Stingley', 'Sauce Gardner', 'Kayvon Thibodeaux', 
-         'Drake London', 'Garret Wilson', 'Chris Olave', 'Jordan Davis', 'Kenny Pickett',
+        'Drake London', 'Garret Wilson', 'Chris Olave', 'Jordan Davis', 'Kenny Pickett',
         'Quay Walker', 'George Karlaftis']
 
 plt.plot(prediction, pff_grades, 'o')
@@ -112,11 +131,13 @@ for i, txt in enumerate(names):
 plt.xlabel('Estimated Years Starting')
 plt.ylabel('PFF Grade 2022')
 plt.show()
+
+
 #Second plot without outlier and with regression line
 pff_grades = np.array([60.3, 80.7, 87.9, 71.9, 83.2, 82.7, 82.5, 71.4, 75.5, 51.9, 52])
 prediction = np.array([5, 12, 7, 11, 8, 10, 6, 6, 7, 4, 5])
 names = ['Travon Walker', 'Aidan Hutchinson', 'Sauce Gardner', 'Kayvon Thibodeaux', 
-         'Drake London', 'Garret Wilson', 'Chris Olave', 'Jordan Davis', 'Kenny Pickett',
+        'Drake London', 'Garret Wilson', 'Chris Olave', 'Jordan Davis', 'Kenny Pickett',
         'Quay Walker', 'George Karlaftis']
 linear_model = LinearRegression()
 x = prediction.reshape(-1, 1)
@@ -131,6 +152,7 @@ for i, txt in enumerate(names):
     if txt != 'Quay Walker':
         plt.annotate(txt, (prediction[i], pff_grades[i]))
     else: 
-        plt.annotate(txt, (prediction[i], pff_grades[i]+2), arrowprops = dict(facecolor = 'black', headwidth = 1))
+        plt.annotate(txt, (prediction[i], pff_grades[i]+2), 
+                    arrowprops = dict(facecolor = 'black', headwidth = 1))
 plt.xlabel('Estimated Years Starting')
 plt.ylabel('PFF Grade 2022')
