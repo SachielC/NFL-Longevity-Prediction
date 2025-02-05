@@ -111,8 +111,13 @@ for player in draft2022:
     print(player)
     print(guess_new(draft2022[player][0], draft2022[player][1]))
 
-"""RESULTS / VISUALIZATION SECTION,
-Taken from am average of several runs from the forest"""
+"""
+======================================================================================================
+RESULTS / VISUALIZATION SECTION,
+Taken from am average of several runs from the forest, 
+Rookie Year Data!
+======================================================================================================
+"""
 
 #Graphs players based on X: the guess made by the algorithm and Y: PFF grades
 #Done with data from rookie year!
